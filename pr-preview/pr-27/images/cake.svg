@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160" width="160" height="160" role="img" aria-label="いちごのショートケーキのイラスト">
+  <rect width="160" height="160" fill="#fffaf3"/>
+  <path d="M35 130 L60 60 h40 l25 70 z" fill="#fff5e6" stroke="#e0d3c2" stroke-width="2"/>
+  <path d="M35 130 L60 60 h40 l25 70 Z" fill="none"/>
+  <path d="M46 130 h68 l-6 -18 h-56 z" fill="#f7c9d8"/>
+  <circle cx="80" cy="55" r="12" fill="#e0243c"/>
+  <path d="M80 43 q4 -10 -4 -14" fill="none" stroke="#3a7d34" stroke-width="3" stroke-linecap="round"/>
+  <path d="M64 100 l4 -14 M80 104 l4 -18 M96 100 l4 -14" stroke="#fff" stroke-width="3" fill="none" stroke-linecap="round"/>
+</svg>
