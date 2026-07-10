@@ -1,0 +1,169 @@
+/* サンドボックス喫茶 共通スタイル */
+/* このファイルはどの Issue でも編集しない（聖域） */
+
+:root {
+  --brand: #6f4e37;
+  --brand-light: #f5ede4;
+  --accent: #d98e04;
+  --text: #2b2320;
+  --border: #e0d3c2;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: "Hiragino Sans", "Noto Sans JP", "Yu Gothic", sans-serif;
+  color: var(--text);
+  background: #fffaf3;
+  line-height: 1.7;
+}
+
+header.site-header {
+  background: var(--brand);
+  color: #fff;
+  padding: 1.2rem 1.5rem;
+}
+
+header.site-header .shop-name {
+  font-size: 1.4rem;
+  font-weight: bold;
+  margin: 0;
+}
+
+header.site-header .page-name {
+  font-size: 0.95rem;
+  opacity: 0.85;
+  margin: 0.2rem 0 0;
+}
+
+main {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 1.5rem;
+}
+
+nav.top-nav ul {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  padding: 0;
+  margin: 1.5rem 0;
+}
+
+nav.top-nav a {
+  display: inline-block;
+  padding: 0.6rem 1rem;
+  background: var(--brand-light);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  color: var(--brand);
+  text-decoration: none;
+  font-weight: bold;
+}
+
+nav.top-nav a:hover {
+  background: var(--accent);
+  color: #fff;
+}
+
+table.menu-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1rem 0;
+}
+
+table.menu-table th,
+table.menu-table td {
+  border: 1px solid var(--border);
+  padding: 0.6rem 0.8rem;
+  text-align: left;
+}
+
+table.menu-table th {
+  background: var(--brand-light);
+}
+
+.card-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin: 1rem 0;
+}
+
+.staff-card {
+  flex: 1 1 200px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 1rem;
+  background: #fff;
+}
+
+.staff-card .staff-name {
+  font-weight: bold;
+  margin: 0 0 0.3rem;
+}
+
+.staff-card .staff-role {
+  color: var(--brand);
+  font-size: 0.9rem;
+  margin: 0 0 0.5rem;
+}
+
+ul.news-list {
+  list-style: none;
+  padding: 0;
+  margin: 1rem 0;
+}
+
+ul.news-list li {
+  border-bottom: 1px dashed var(--border);
+  padding: 0.6rem 0;
+}
+
+ul.news-list .news-date {
+  color: var(--brand);
+  font-weight: bold;
+  margin-right: 0.6rem;
+}
+
+.gallery-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin: 1rem 0;
+}
+
+.gallery-list img {
+  width: 160px;
+  height: 160px;
+  object-fit: cover;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: #fff;
+}
+
+dl.faq-list dt {
+  font-weight: bold;
+  margin-top: 1rem;
+}
+
+dl.faq-list dd {
+  margin: 0.3rem 0 0;
+}
+
+.back-link {
+  display: inline-block;
+  margin-top: 2rem;
+  color: var(--brand);
+}
+
+footer.site-footer {
+  text-align: center;
+  color: #9a8b7a;
+  font-size: 0.85rem;
+  padding: 2rem 0;
+}
