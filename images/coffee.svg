@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160" width="160" height="160" role="img" aria-label="コーヒーのイラスト">
+  <rect width="160" height="160" fill="#fffaf3"/>
+  <path d="M40 70 h70 v30 a35 35 0 0 1 -35 35 h0 a35 35 0 0 1 -35 -35 z" fill="#6f4e37"/>
+  <ellipse cx="75" cy="70" rx="35" ry="8" fill="#4a3324"/>
+  <path d="M110 78 h14 a14 14 0 0 1 0 28 h-10" fill="none" stroke="#6f4e37" stroke-width="6"/>
+  <path d="M55 55 q5 -10 0 -18" fill="none" stroke="#b08968" stroke-width="3" stroke-linecap="round"/>
+  <path d="M72 55 q5 -10 0 -18" fill="none" stroke="#b08968" stroke-width="3" stroke-linecap="round"/>
+  <path d="M89 55 q5 -10 0 -18" fill="none" stroke="#b08968" stroke-width="3" stroke-linecap="round"/>
+</svg>
