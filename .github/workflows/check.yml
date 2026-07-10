@@ -1,0 +1,70 @@
+name: 持ち込みチェック
+
+on:
+  pull_request:
+
+permissions:
+  contents: read
+  pull-requests: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 変更ファイルを点検
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+          PR: ${{ github.event.pull_request.number }}
+        run: |
+          set -uo pipefail
+          gh api --paginate "repos/$REPO/pulls/$PR/files?per_page=100" --jq '.[] | {f: .filename, s: .status, a: .additions, p: (.patch // "")}' > files.ndjson
+          fail=0
+          err() { echo "::error::$1"; fail=1; }
+          n=$(wc -l < files.ndjson)
+          if [ "$n" -gt 2 ]; then
+            err "変更されたファイルが ${n} 個あります。1つの Issue で触るのは 1〜2 ファイルまでです。Claude に「Issue の対象ファイル以外の変更を取り消してください」と頼んでください。"
+          fi
+          while IFS= read -r line; do
+            f=$(jq -r '.f' <<<"$line"); s=$(jq -r '.s' <<<"$line"); a=$(jq -r '.a' <<<"$line"); p=$(jq -r '.p' <<<"$line")
+            base=$(basename "$f")
+            case "$base" in
+              package.json|package-lock.json|yarn.lock|pnpm-lock.yaml|tsconfig.json|vite.config.*|webpack.config.*|next.config.*)
+                err "「$f」が追加されています。このリポジトリでは npm・React・ビルドツールは使いません。Claude に「$f を削除してください」と頼んでください。" ;;
+              *.jsx|*.tsx|*.ts)
+                err "「$f」は React / TypeScript のファイルです。ここではプレーンな HTML / CSS だけを使います。Claude に「$f を削除してください」と頼んでください。" ;;
+              *" "*)
+                err "ファイル名「$base」に空白が入っています。空白のない名前に付け直してもらってください。" ;;
+            esac
+            case "$f" in
+              *node_modules/*)
+                err "node_modules が入っています。Claude に「node_modules を削除してください」と頼んでください。" ;;
+              site/index.html|site/css/*)
+                err "「$f」は、この練習ではさわらない約束のファイル（トップページ・共通デザイン）です。Claude に「$f への変更を取り消してください」と頼んでください。" ;;
+            esac
+            case "$f" in
+              site/*) : ;;
+              *)
+                err "site/ フォルダの外のファイル「$f」が変更されています。変更してよいのは site/ の中だけです。Claude に「$f への変更を取り消してください」と頼んでください。" ;;
+            esac
+            if [ "$s" = "added" ]; then
+              case "$base" in
+                *.js) err "新しい JavaScript ファイル「$f」が追加されています。この練習では JS は使いません。Claude に「$f を削除してください」と頼んでください。" ;;
+                *.*) : ;;
+                *) err "「$f」に拡張子がありません。HTML なら .html のように、正しい拡張子を付けてもらってください。" ;;
+              esac
+            fi
+            if echo "$base" | grep -Eq '\.(html|css|svg|md|txt)\.[A-Za-z0-9]+$'; then
+              err "「$f」の拡張子が二重になっています（例: faq.html.txt）。正しい拡張子 1 つだけに直してもらってください。"
+            fi
+            if [ "$a" -gt 200 ]; then
+              err "「$f」への追加が ${a} 行あり、大きすぎます。どの Issue も数行〜数十行で終わる内容です。Claude に「頼んだことだけの最小限の変更にやり直してください」と頼んでください。"
+            fi
+            if echo "$p" | grep -Eq '<script[^>]+src=.https?://'; then
+              err "外部サイトからプログラムを読み込むタグ（script src=http…）が入っています。この練習では外部読み込みは使いません。Claude に「外部スクリプトの読み込みを削除してください」と頼んでください。"
+            fi
+          done < files.ndjson
+          if [ "$fail" -eq 0 ]; then
+            echo "持ち込みチェック OK: 余計なファイルや大きすぎる変更はありません。"
+          fi
+          exit "$fail"
